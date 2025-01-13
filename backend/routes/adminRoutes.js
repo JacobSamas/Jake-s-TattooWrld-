@@ -1,15 +1,28 @@
 const express = require('express');
 const { verifyToken, isAdmin } = require('../middleware/authMiddleware');
+const {
+    createTattoo,
+    getAllTattoos,
+    getTattooById,
+    updateTattoo,
+    deleteTattoo
+} = require('../controllers/tattooController');
+
 const router = express.Router();
 
-// Example Route: Get all users (Admin-only)
-router.get('/users', verifyToken, isAdmin, (req, res) => {
-    res.send('Admin: List of all users');
-});
+// Create a new tattoo
+router.post('/tattoos', verifyToken, isAdmin, createTattoo);
 
-// Example Route: Manage tattoos (Admin-only)
-router.post('/tattoos', verifyToken, isAdmin, (req, res) => {
-    res.send('Admin: Create or manage tattoos');
-});
+// Get all tattoos
+router.get('/tattoos', verifyToken, isAdmin, getAllTattoos);
+
+// Get a single tattoo by ID
+router.get('/tattoos/:id', verifyToken, isAdmin, getTattooById);
+
+// Update a tattoo by ID
+router.put('/tattoos/:id', verifyToken, isAdmin, updateTattoo);
+
+// Delete a tattoo by ID
+router.delete('/tattoos/:id', verifyToken, isAdmin, deleteTattoo);
 
 module.exports = router;
