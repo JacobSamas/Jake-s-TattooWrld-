@@ -10,6 +10,8 @@ const Tattoo = require('./models/Tattoo');
 const Appointment = require('./models/Appointment');
 
 const authRoutes = require('./routes/authRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const customerRoutes = require('./routes/customerRoutes');
 
 
 dotenv.config(); 
@@ -22,6 +24,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/customer', customerRoutes);
 
 
 // Base Route
