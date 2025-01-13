@@ -58,3 +58,35 @@ exports.cancelAppointment = async (req, res) => {
         res.status(500).json({ message: 'Error cancelling appointment', error: error.message });
     }
 };
+
+// Get all appointments (Admin-only)
+exports.getAllAppointments = async (req, res) => {
+    try {
+        const appointments = await Appointment.findAll({
+            include: [User, Tattoo], // Include customer and tattoo details
+        });
+
+        res.status(200).json(appointments);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching appointments', error: error.message });
+    }
+};
+
+// Update appointment status (Admin-only)
+exports.updateAppointmentStatus = async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body; // Status: 'pending', 'confirmed', 'cancelled', 'rejected'
+
+    try {
+        const appointment = await Appointment.findByPk(id);
+
+        if (!appointment) {
+            return res.status(404).json({ message: 'Appointment not found' });
+        }
+
+        await appointment.update({ status });
+        res.status(200).json({ message: `Appointment status updated to ${status}`, appointment });
+    } catch (error) {
+        res.status(500).json({ message: 'Error updating appointment', error: error.message });
+    }
+};

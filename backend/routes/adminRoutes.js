@@ -7,6 +7,10 @@ const {
     updateTattoo,
     deleteTattoo
 } = require('../controllers/tattooController');
+const {
+    getAllAppointments,
+    updateAppointmentStatus,
+} = require('../controllers/appointmentController');
 
 const router = express.Router();
 
@@ -24,5 +28,11 @@ router.put('/tattoos/:id', verifyToken, isAdmin, updateTattoo);
 
 // Delete a tattoo by ID
 router.delete('/tattoos/:id', verifyToken, isAdmin, deleteTattoo);
+
+// Get all appointments (Admin-only)
+router.get('/appointments', verifyToken, isAdmin, getAllAppointments);
+
+// Update appointment status (Admin-only)
+router.put('/appointments/:id/status', verifyToken, isAdmin, updateAppointmentStatus);
 
 module.exports = router;
