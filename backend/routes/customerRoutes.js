@@ -1,15 +1,20 @@
 const express = require('express');
 const { verifyToken } = require('../middleware/authMiddleware');
+const {
+    bookAppointment,
+    getAppointments,
+    cancelAppointment,
+} = require('../controllers/appointmentController');
+
 const router = express.Router();
 
-// Example Route: Book an appointment (Customer-only)
-router.post('/appointments', verifyToken, (req, res) => {
-    res.send('Customer: Appointment booked successfully');
-});
+// Book an appointment
+router.post('/appointments', verifyToken, bookAppointment);
 
-// Example Route: Get customer profile
-router.get('/profile', verifyToken, (req, res) => {
-    res.send('Customer: Profile information');
-});
+// Get all appointments for the logged-in user
+router.get('/appointments', verifyToken, getAppointments);
+
+// Cancel an appointment
+router.put('/appointments/:id/cancel', verifyToken, cancelAppointment);
 
 module.exports = router;
