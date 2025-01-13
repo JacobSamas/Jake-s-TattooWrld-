@@ -90,3 +90,17 @@ exports.updateAppointmentStatus = async (req, res) => {
         res.status(500).json({ message: 'Error updating appointment', error: error.message });
     }
 };
+
+// Get all appointments for the logged-in customer
+exports.getCustomerAppointments = async (req, res) => {
+    try {
+        const appointments = await Appointment.findAll({
+            where: { userId: req.user.id },
+            include: [Tattoo], // Include tattoo details
+        });
+
+        res.status(200).json(appointments);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching appointments', error: error.message });
+    }
+};

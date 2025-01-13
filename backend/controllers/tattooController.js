@@ -75,3 +75,13 @@ exports.deleteTattoo = async (req, res) => {
         res.status(500).json({ message: 'Error deleting tattoo', error: error.message });
     }
 };
+
+// Get all tattoos (Customer)
+exports.getAvailableTattoos = async (req, res) => {
+    try {
+        const tattoos = await Tattoo.findAll();
+        res.status(200).json(tattoos);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching tattoos', error: error.message });
+    }
+};
