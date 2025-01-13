@@ -2,14 +2,17 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
-const sequelize = require('./config/db'); // Import the database connection
+const sequelize = require('./config/db'); 
 
 // Import Models
 const User = require('./models/User');
 const Tattoo = require('./models/Tattoo');
 const Appointment = require('./models/Appointment');
 
-dotenv.config(); // Load environment variables
+const authRoutes = require('./routes/authRoutes');
+
+
+dotenv.config(); 
 
 const app = express();
 
@@ -18,13 +21,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/api/auth', authRoutes);
+
+
 // Base Route
 app.get('/', (req, res) => {
     res.send('Welcome to Jake\'s TattooWrld API');
 });
 
 // Sync Database
-sequelize.sync({ force: false }) // Change to true to drop and recreate tables
+sequelize.sync({ force: false }) 
     .then(() => {
         console.log('Database connected and synced successfully');
     })
