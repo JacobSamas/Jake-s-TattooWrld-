@@ -1,5 +1,6 @@
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import Footer from "@/components/Footer";
 import ReduxProvider from "@/redux/ReduxProvider";
 
 export const metadata = {
@@ -14,6 +15,7 @@ export default function RootLayout({ children }) {
               <ReduxProvider>
                 <Navbar />
                 <main className="min-h-screen">{children}</main>
+                <Footer />
               </ReduxProvider>
             </body>
         </html>
